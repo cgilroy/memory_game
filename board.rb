@@ -16,10 +16,11 @@ class Board
     end
 
     def populate
-        
+        letters = Array('A'..'Z')
         8.times do
-            first_card = Card.new
-            second_card = Card.new(first_card.face_value)
+            letter = letters[rand(letters.length-1)]
+            first_card = Card.new(letter)
+            second_card = Card.new(letter)
             [first_card,second_card].each do |card|
                 index = [1,1]
                 until @game_board[index[0]][index[1]] == nil do
@@ -27,6 +28,7 @@ class Board
                 end
                 @game_board[index[0]][index[1]] = card if @game_board[index[0]][index[1]] == nil
             end
+            letters.delete(letter)
         end
         # debugger
     end
