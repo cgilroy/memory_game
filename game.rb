@@ -1,16 +1,19 @@
 require_relative('board')
+require_relative('HumanPlayer')
+require_relative('ComputerPlayer')
 
 class Game
     def initialize
         @board = Board.new
         @last_guess = ''
+        @player = ComputerPlayer.new
     end
 
     def play
         until self.over? do
             system("clear")
             @board.render
-            guess = self.get_guess
+            guess = @player.get_guess(@last_guess)
             self.check_guess(guess)
         end
         system("clear")
@@ -18,26 +21,33 @@ class Game
         puts "You win!"
     end
 
-    def get_guess
-        puts "Please enter your guess e.g. '1,3'"
-        gets.chomp
-    end
-
     def check_guess(current_guess)
+        return if !self.is_valid_guess?(current_guess)
         @board[current_guess].reveal
+        @player.receive_revealed_card(current_guess,@board[current_guess].to_s)
         if @last_guess == ''
             @last_guess = current_guess
         else    
+            system('clear')
+            @board.render
             if @board[current_guess] != @board[@last_guess]
-                system('clear')
-                @board.render
                 puts 'Try again.'
                 @board[@last_guess].hide
                 @board[current_guess].hide
-                sleep(1)
+            else
+                @player.receive_match(@last_guess,current_guess)
             end
+            sleep(1)
             @last_guess = ''
         end
+    end
+
+    def is_valid_guess?(guess)
+        pos_array = guess.split('')
+        return false if guess.length != 3
+        return false if !pos_array[0].to_i.between?(0,3) || !pos_array[2].to_i.between?(0,3)
+        return false if pos_array[1] != ","
+        true
     end
 
     def over?

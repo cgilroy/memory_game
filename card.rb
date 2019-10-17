@@ -1,8 +1,7 @@
 class Card
     attr_reader :face_value, :face_up
-    def initialize(value=nil)
-        letters = Array('A'..'Z')
-        @face_value = value || letters[rand(25)]
+    def initialize(value)
+        @face_value = value
         @face_up = false
     end
     
