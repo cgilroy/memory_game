@@ -22,6 +22,7 @@ class Game
     end
 
     def check_guess(current_guess)
+        return if !self.is_valid_guess?(current_guess)
         @board[current_guess].reveal
         @player.receive_revealed_card(current_guess,@board[current_guess].to_s)
         if @last_guess == ''
@@ -39,6 +40,14 @@ class Game
             sleep(1)
             @last_guess = ''
         end
+    end
+
+    def is_valid_guess?(guess)
+        pos_array = guess.split('')
+        return false if guess.length != 3
+        return false if !pos_array[0].to_i.between?(0,3) || !pos_array[2].to_i.between?(0,3)
+        return false if pos_array[1] != ","
+        true
     end
 
     def over?
