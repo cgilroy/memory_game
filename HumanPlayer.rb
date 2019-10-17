@@ -8,4 +8,7 @@ class HumanPlayer
     def receive_revealed_card(pos,val)
         # dummy method
     end
+    def receive_match(pos1,pos2)
+        # dummy method
+    end
 end
