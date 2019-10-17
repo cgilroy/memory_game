@@ -30,7 +30,6 @@ class Board
             end
             letters.delete(letter)
         end
-        # debugger
     end
 
     def [](pos)
@@ -55,17 +54,4 @@ class Board
             puts
         end
     end
-
-    # def test_render
-    #     @game_board.each do |row|
-    #         row.each do |card|
-    #             if card.is_a?(Card)
-    #                 print card.to_s + ' '
-    #             else
-    #                 print card.to_s + ' '
-    #             end
-    #         end
-    #         puts
-    #     end
-    # end
 end
